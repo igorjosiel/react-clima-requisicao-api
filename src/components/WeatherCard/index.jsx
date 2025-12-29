@@ -3,13 +3,16 @@ import "./styles.css";
 const WeatherCard = ({ weatherData }) => {
   return (
     <section className="weather-card">
-      <p>Hoje {weatherData?.forecast[0]?.date}</p>
-      <img
-        src={`./icons-weather/${weatherData?.condition_slug}.svg`}
-        alt={weatherData?.description}
-      />
-      <h2 className="temperature">{weatherData?.temp}°</h2>
-      <p className="condition">{weatherData?.description}</p>
+      <p className="today-weather">Hoje ({weatherData?.forecast[0]?.date})</p>
+
+      <div className="today-weather-info">
+        <img
+          src={`./icons-weather/${weatherData?.condition_slug}.svg`}
+          alt={weatherData?.description}
+        />
+        <h2 className="temperature">{weatherData?.temp}°</h2>
+        <p className="condition">{weatherData?.description}</p>
+      </div>
 
       <div className="humidity">
         <div>
@@ -26,7 +29,9 @@ const WeatherCard = ({ weatherData }) => {
           <p>Min/Max:</p>
         </div>
 
-        <span>{weatherData?.forecast[0]?.min}/{weatherData?.forecast[0]?.max}°</span>
+        <span>
+          {weatherData?.forecast[0]?.min}/{weatherData?.forecast[0]?.max}°
+        </span>
       </div>
     </section>
   );

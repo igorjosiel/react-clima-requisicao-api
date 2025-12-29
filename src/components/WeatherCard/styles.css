@@ -6,16 +6,27 @@
   width: 328px;
 }
 
+.today-weather-info {
+  margin: 24px 0;
+}
+
+.today-weather,
+.humidity p,
+.min-max p {
+  font-size: 16px;
+  font-weight: 600;
+}
+
 .temperature {
   font-size: 40px;
   font-weight: bold;
-  margin: 0px;
+  margin: -10px 0 5px 0;
+  line-height: 100%;
 }
 
 .condition {
   font-size: 13px;
   margin: 0;
-  margin-bottom: 8px;
 }
 
 .humidity,
