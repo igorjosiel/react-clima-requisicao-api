@@ -11,17 +11,57 @@ function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [forecast, setForecast] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    async function fetchWeather() {
-      setLoading(true);
+    setLoading(true);
 
+    async function fetchByCoordinates(lat, lon) {
       try {
         const response = await fetch(
-          `https://api.hgbrasil.com/weather?format=json-cors&key=${API_KEY}&city_name=${
-            city || "São Paulo,SP"
-          }`
+          `https://api.hgbrasil.com/weather?format=json-cors&key=${API_KEY}&lat=${lat}&lon=${lon}`
+        );
+        const data = await response.json();
+
+        if (data.results) {
+          setWeatherData(data.results);
+          setForecast(data.results.forecast.slice(1, 4));
+        } else {
+          setError("Não foi possível obter os dados do clima.");
+        }
+      } catch (err) {
+        setError("Erro ao buscar dados do clima." + err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+
+          fetchByCoordinates(latitude, longitude);
+        },
+        (err) => {
+          setError("Permissão de localização negada." + err);
+          setLoading(false);
+        }
+      );
+    } else {
+      setError("Geolocalização não suportada pelo navegador.");
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    
+    async function fetchWeather() {
+      try {
+        const response = await fetch(
+          `https://api.hgbrasil.com/weather?format=json-cors&key=${API_KEY}&city_name=${city}`
         );
         const data = await response.json();
 
@@ -36,7 +76,7 @@ function App() {
       }
     }
 
-    fetchWeather();
+    if (city) fetchWeather();
   }, [city]);
 
   return (
