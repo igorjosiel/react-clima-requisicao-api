@@ -1,0 +1,29 @@
+.forecast-item {
+  width: 104px;
+  height: 152px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  background-color: #4d5e6f;
+  padding: 16px 8px;
+  border-radius: 16px;
+  color: #fff;
+}
+
+.forecast-date {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+}
+
+.forecast-item img {
+  width: 40px;
+}
+
+.forecast-temp {
+  font-size: 20px;
+  font-weight: 500;
+}
